@@ -2,7 +2,7 @@
 ### NAME : HARISH R
 ### DEPARTMENT : CSE(IOT)
 ### ROLL NO : 212222110012
-### DATE OF EXPERIMENT : 6.2.26
+### DATE OF EXPERIMENT : 19.3.26
 
 ### AIM
 To interface a digital output device (LED) with the Raspberry Pi 4 and control it using Python.
