@@ -1,8 +1,8 @@
 # EXPERIMENT-01-INTERFACTING-DIGITAL-OUTPUT-WITH-EDGE-DEVICE---(RASPBERRYPI-PI4)
-### NAME 
-### DEPARTMENT 
-### ROLL NO 
-### DATE OF EXPERIMENT 
+### NAME : HARISH R
+### DEPARTMENT : CSE(IOT)
+### ROLL NO : 212222110012
+### DATE OF EXPERIMENT : 6.2.26
 
 ### AIM
 To interface a digital output device (LED) with the Raspberry Pi 4 and control it using Python.
@@ -53,31 +53,173 @@ Connect the IR sensor OUT to any one GPIO.
 
 ## PROGRAM (Python)
 ```
+import RPi.GPIO as GPIO
+import time
+import urllib.request
+
+# ThingSpeak details
+WRITE_API_KEY = "6D98N0MXJUBXA8L8"
+CHANNEL_ID = 3249454
+THINGSPEAK_URL = "https://api.thingspeak.com/update"
+
+# Set GPIO numbering mode
+GPIO.setmode(GPIO.BCM)
+
+# Define LED pin
+LED_PIN = 18
+
+# Set GPIO18 as output
+GPIO.setup(LED_PIN, GPIO.OUT)
+
+def send_to_thingspeak(value):
+    url = f"https://api.thingspeak.com/update?api_key=6D98N0MXJUBXA8L8&field1={value}"
+    urllib.request.urlopen(url)
+    print("Sent to ThingSpeak:", value)
+
+try:
+    while True:
+        # LED ON
+        GPIO.output(LED_PIN, GPIO.HIGH)
+        print("LED ON")
+        send_to_thingspeak(1)
+        time.sleep(15)
+
+        # LED OFF
+        GPIO.output(LED_PIN, GPIO.LOW)
+        print("LED OFF")
+        send_to_thingspeak(0)
+        time.sleep(15)
+
+except KeyboardInterrupt:
+    print("Program stopped")
+
+finally:
+    GPIO.cleanup()
 
 
- 
-
-
-
- 
 ````
 
 ### OUPUT  
-Experiment 1A
 
-# FIGURE -02 ADD TITILE HERE 
+### Experiment 1A
 
-#  FIGURE -03 ADD TITILE HERE 
+### LED OFF
 
-# FIGURE -04 ADD TITLE HERE 
+<img width="1600" height="1297" alt="image" src="https://github.com/user-attachments/assets/2c6cea5c-9973-419c-97c3-7caf612024ab" />
+
+
+
+<img width="808" height="1280" alt="image" src="https://github.com/user-attachments/assets/0356cb69-05a1-4bf3-b837-1f86c3e7e87e" />
+
+
+
+
+<img width="808" height="1280" alt="image" src="https://github.com/user-attachments/assets/6fd35b5c-da25-4cdd-b054-a2ec49dab044" />
+
+### LED ON: 
+
+
+<img width="1600" height="1430" alt="image" src="https://github.com/user-attachments/assets/5e0995f6-1757-4275-9226-0e17a932c5ad" />
+
+
+
+<img width="861" height="1280" alt="image" src="https://github.com/user-attachments/assets/8ad1b850-1376-4d5f-a17c-bc34e9dc7d12" />
+
+
+
+
+<img width="1905" height="918" alt="Screenshot 2026-02-04 111629" src="https://github.com/user-attachments/assets/a5c15b2e-aa5d-467b-8fc2-ead4935dbcaa" />
+
 
 Experiment 1B
 
-# FIGURE -05 ADD TITILE HERE 
+### PROGRAM(python)
+```
+import RPi.GPIO as GPIO
+import time
+import urllib.request
 
-#  FIGURE -06 ADD TITILE HERE 
+# ThingSpeak details
+WRITE_API_KEY = "6D98N0MXJUBXA8L8"
+CHANNEL_ID =  3249454
+THINGSPEAK_URL = "https://api.thingspeak.com/update"
 
-# FIGURE -07 ADD TITLE HERE 
+
+
+# Pin setup
+SENSOR_PIN = 23   # Input from sensor
+LED_PIN = 18      # Output to LED
+
+# GPIO mode
+GPIO.setmode(GPIO.BCM)
+
+# Setup pins
+GPIO.setup(SENSOR_PIN, GPIO.IN)
+GPIO.setup(LED_PIN, GPIO.OUT)
+
+def send_to_thingspeak(value):
+    url = f"https://api.thingspeak.com/update?api_key=6D98N0MXJUBXA8L8&field2={value}"
+    urllib.request.urlopen(url)
+    print("Sent to ThingSpeak:", value)
+
+
+print("Sensor + LED system running...")
+
+try:
+    while True:
+        sensor_value = GPIO.input(SENSOR_PIN)
+
+        if sensor_value == 0:   # Many IR sensors give LOW when object detected
+            print("Object Detected! LED ON")
+            GPIO.output(LED_PIN, GPIO.HIGH)
+            send_to_thingspeak(1)
+
+            time.sleep(15)
+        else:
+            print("No Object. LED OFF")
+            GPIO.output(LED_PIN, GPIO.LOW)
+            send_to_thingspeak(0)
+
+            time.sleep(15)
+
+        time.sleep(0.1)
+
+except KeyboardInterrupt:
+    print("Stopped by user")
+
+finally:
+    GPIO.cleanup()
+```
+
+# LED OFF(NO OBJECT DETECTED):
+
+
+<img width="1201" height="1600" alt="image" src="https://github.com/user-attachments/assets/469fe163-9b7a-418b-84b2-ad3e0c97c552" />
+
+
+
+<img width="680" height="1280" alt="image" src="https://github.com/user-attachments/assets/734387d8-67c3-4fcb-917c-ce08ad266ca1" />
+
+
+
+<img width="1893" height="922" alt="Screenshot 2026-02-04 120121" src="https://github.com/user-attachments/assets/7e223307-98bf-428c-9179-a5fd62222f9a" />
+
+
+
+# LED ON(OBJECT DETECTED):
+
+
+<img width="1430" height="1600" alt="image" src="https://github.com/user-attachments/assets/1ef8aac9-950f-4d0d-a86d-8bf7dad83435" />
+
+
+
+
+<img width="730" height="1280" alt="image" src="https://github.com/user-attachments/assets/3fcf6378-cc1d-4826-a6c8-a657a8dedc97" />
+
+
+
+
+<img width="1887" height="910" alt="Screenshot 2026-02-04 120138" src="https://github.com/user-attachments/assets/c41af1d7-53c3-4fb7-89fa-6aeae0a49918" />
 
  
 ## RESULTS
